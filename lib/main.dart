@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can/controllers/user_controller.dart';
 import 'package:i_can/screens/bottom_bar.dart';
 import 'package:i_can/screens/on_boarding_1.dart';
+import 'package:i_can/screens/on_boarding_2.dart';
 
 import 'package:get/get.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.put(UserController());
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'I Can',
       theme: ThemeData(
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
         cardColor: const Color(0xff313433),
         focusColor: const Color(0xff636866),
       ),
+      getPages: [
+        GetPage(name: OnBoardingOne.routeName, page: () => OnBoardingOne()),
+        GetPage(name: OnBoardingTwo.routeName, page: () => OnBoardingTwo()),
+      ],
       home: OnBoardingOne(),
     );
   }

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CustomBottomAppBar extends StatelessWidget {
-  CustomBottomAppBar({Key? key, required this.title}) : super(key: key);
+  CustomBottomAppBar({Key? key, required this.title, required this.cb})
+      : super(key: key);
 
   String? title;
+
+  //call back function for the bottom app bar
+  void Function() cb;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,7 @@ class CustomBottomAppBar extends StatelessWidget {
       ),
       child: BottomAppBar(
         child: InkWell(
-          onTap: () {},
+          onTap: cb,
           child: Container(
             height: 80,
             decoration: BoxDecoration(

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:i_can/widgets/custom_text_field.dart';
 
 class CustomOnBoardingCard extends StatelessWidget {
-  CustomOnBoardingCard({Key? key, required this.title, required this.cb})
+  CustomOnBoardingCard(
+      {Key? key, required this.title, required this.bottomWidget})
       : super(key: key);
 
   String title;
 
-  //cb - Call Back
-  Function? cb;
+  dynamic bottomWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -42,16 +42,7 @@ class CustomOnBoardingCard extends StatelessWidget {
             SizedBox(
               height: (mediaQuery.size.height / 4) / 8,
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              width: double.infinity,
-              height: (mediaQuery.size.height / 4.5) / 4,
-              decoration: BoxDecoration(
-                color: theme.focusColor,
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: CustomTextField(cb: cb as Function(String?)),
-            ),
+            bottomWidget,
           ],
         ),
       ),

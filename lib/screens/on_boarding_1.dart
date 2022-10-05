@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import 'package:i_can/screens/on_boarding_2.dart';
 import 'package:i_can/widgets/custom_bottom_app_bar.dart';
 import 'package:i_can/widgets/custom_on_boarding_card.dart';
 import 'package:i_can/controllers/user_controller.dart';
+import 'package:i_can/widgets/custom_text_field.dart';
 
 //first onboarding screen
 class OnBoardingOne extends StatelessWidget {
   OnBoardingOne({Key? key}) : super(key: key);
+  static const routeName = '/';
 
   UserController userController = Get.find<UserController>();
 
@@ -20,12 +23,30 @@ class OnBoardingOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final theme = Theme.of(context);
     return Scaffold(
       body: Center(
         child: CustomOnBoardingCard(
-            title: 'What should I call you?', cb: onChanged),
+          title: 'What should I call you?',
+          bottomWidget: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            width: double.infinity,
+            height: (mediaQuery.size.height / 4.5) / 4,
+            decoration: BoxDecoration(
+              color: theme.focusColor,
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: CustomTextField(cb: onChanged),
+          ),
+        ),
       ),
-      bottomNavigationBar: CustomBottomAppBar(title: 'Next'),
+      bottomNavigationBar: CustomBottomAppBar(
+        title: 'Next',
+        cb: () {
+          Get.toNamed(OnBoardingTwo.routeName);
+        },
+      ),
     );
   }
 }
