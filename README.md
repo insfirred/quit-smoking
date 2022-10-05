@@ -14,6 +14,8 @@ An application that helps you to quit smoking by showing your everyday performan
 - Open the Pull Request
 - Sit back and Chill
 
+### Feel free to create your own issues :)
+
 <!-- ## Our Contributors
 <table>
 	<tr>
