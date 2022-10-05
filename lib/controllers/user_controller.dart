@@ -21,6 +21,11 @@ class UserController extends GetxController {
     update();
   }
 
+  void setNumberOfCigPerDay(int val) {
+    user.numberOfCigPerDay = val;
+    update();
+  }
+
   String getName() {
     return user.name;
   }
@@ -31,5 +36,9 @@ class UserController extends GetxController {
 
   int getNumberofCigPerPack() {
     return user.numberOfCigPerPack;
+  }
+
+  int getNumberOfCigPerDay() {
+    return user.numberOfCigPerDay;
   }
 }
