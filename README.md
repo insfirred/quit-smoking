@@ -1,16 +1,36 @@
-# i_can
 
-A new Flutter project.
+# I Can And I Will
 
-## Getting Started
+An application that helps you to quit smoking by showing your everyday performance and boosting your confidence.
 
-This project is a starting point for a Flutter application.
+[Designs for this project](https://www.figma.com/file/AoCnj9cF0chozmdPN2gQPE/I-CAN?node-id=0%3A1)
 
-A few resources to get you started if this is your first Flutter project:
+## Rules for Contributions
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Dive into the issues section and find a issue that you want to work on
+- Setup the project in your local system 
+- Solve the Issue
+- Commit your progress
+- Open the Pull Request
+- Sit back and Chill
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Project Setup
+##### Fork the repository and Clone it
+```bash
+git clone https://github.com/insfirred/inshorts-clone.git
+```
+  ##### Move to the desired folder
+```bash
+cd inshorts_clone
+```
+
+  ##### To run the app, simply write
+```bash
+flutter pub get
+```
+
+```bash
+flutter run
+```
+
+## Star this Repo ⭐
