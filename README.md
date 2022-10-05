@@ -28,7 +28,7 @@ An application that helps you to quit smoking by showing your everyday performan
 </table> -->
 
 # Project Setup
-### This project is built in Flutter 3.3.2
+### This project is built in Flutter v3.3.2
 ##### Fork the repository and Clone it
 ```bash
 git clone https://github.com/insfirred/inshorts-clone.git
