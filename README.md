@@ -14,6 +14,17 @@ An application that helps you to quit smoking by showing your everyday performan
 - Open the Pull Request
 - Sit back and Chill
 
+<!-- ## Our Contributors
+<table>
+	<tr>
+		<td>
+			<a href="https://github.com/insfirred/quit-smoking/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=insfirred/quit-smoking" />
+</a>
+		</td>
+	</tr>
+</table> -->
+
 # Project Setup
 ##### Fork the repository and Clone it
 ```bash
