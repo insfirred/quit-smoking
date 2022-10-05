@@ -9,16 +9,15 @@ import 'package:i_can/controllers/user_controller.dart';
 import 'package:i_can/widgets/custom_text_field.dart';
 
 //first onboarding screen
-class OnBoardingOne extends StatelessWidget {
-  OnBoardingOne({Key? key}) : super(key: key);
-  static const routeName = '/';
+class OnBoardingThree extends StatelessWidget {
+  OnBoardingThree({Key? key}) : super(key: key);
+  static const routeName = '/third-on-boarding';
 
   UserController userController = Get.find<UserController>();
 
   //callback function that will be called whenever value in the text field is changed
-  //for ex - it will be called whenever the user inputs his/her name
   void onChanged(String? val) {
-    userController.setName(val as String);
+    userController.setNumberOfCigPerPack(int.parse(val.toString()));
   }
 
   @override
@@ -28,7 +27,7 @@ class OnBoardingOne extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: CustomOnBoardingCard(
-          title: 'What should I call you?',
+          title: 'How many cigarettes are there in one pack?',
           bottomWidget: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             width: double.infinity,
@@ -39,7 +38,7 @@ class OnBoardingOne extends StatelessWidget {
             ),
             child: CustomTextField(
               cb: onChanged,
-              label: 'Your name',
+              textInputType: TextInputType.number,
             ),
           ),
         ),

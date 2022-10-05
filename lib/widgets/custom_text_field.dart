@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField({Key? key, required this.cb}) : super(key: key);
+  CustomTextField({
+    Key? key,
+    required this.cb,
+    this.label = "",
+    this.textInputType = TextInputType.name,
+  }) : super(key: key);
 
   Function(String?) cb;
+
+  TextInputType textInputType;
+
+  String label;
 
   @override
   Widget build(BuildContext context) {
@@ -11,9 +20,9 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       onChanged: cb,
       decoration: InputDecoration(
-        label: const Text(
-          'Your name',
-          style: TextStyle(
+        label: Text(
+          label,
+          style: const TextStyle(
             color: Color(0xffa8a8a8),
             fontSize: 25,
           ),
@@ -28,6 +37,7 @@ class CustomTextField extends StatelessWidget {
         disabledBorder: InputBorder.none,
         focusedErrorBorder: InputBorder.none,
       ),
+      keyboardType: textInputType,
       cursorHeight: 25,
       style: const TextStyle(
         color: Colors.white,

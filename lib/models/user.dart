@@ -2,6 +2,7 @@
 class User {
   String name = '';
   DateTime startingDate = DateTime.now();
+  int numberOfCigPerPack = 0;
 
   User();
 }
