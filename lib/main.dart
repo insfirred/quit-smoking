@@ -5,7 +5,10 @@ import 'package:i_can/controllers/user_controller.dart';
 import 'package:i_can/screens/bottom_bar.dart';
 import 'package:i_can/screens/on_boarding_1.dart';
 
-import './screens/home_screen.dart';
+import 'package:get/get.dart';
+
+import './screens/on_boarding_1.dart';
+import './controllers/user_controller.dart';
 
 void main() {
   runApp(const MyApp());
