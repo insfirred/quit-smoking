@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import 'package:i_can/screens/on_boarding_4.dart';
+import 'package:i_can/screens/on_boarding_2.dart';
 import 'package:i_can/widgets/custom_bottom_app_bar.dart';
 import 'package:i_can/widgets/custom_on_boarding_card.dart';
 import 'package:i_can/controllers/user_controller.dart';
 import 'package:i_can/widgets/custom_text_field.dart';
 
 //first onboarding screen
-class OnBoardingThree extends StatelessWidget {
-  OnBoardingThree({Key? key}) : super(key: key);
-  static const routeName = '/third-on-boarding';
+class OnBoardingFour extends StatelessWidget {
+  OnBoardingFour({Key? key}) : super(key: key);
+  static const routeName = '/Fourth-on-boarding';
 
   UserController userController = Get.find<UserController>();
 
   //callback function that will be called whenever value in the text field is changed
   void onChanged(String? val) {
-    userController.setNumberOfCigPerPack(int.parse(val.toString()));
+    userController.setNumberOfCigPerDay(int.parse(val.toString()));
   }
 
   @override
@@ -27,7 +27,7 @@ class OnBoardingThree extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: CustomOnBoardingCard(
-          title: 'How many cigarettes are there in one pack?',
+          title: 'How many cigarettes you smoke daily?',
           bottomWidget: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             width: double.infinity,
@@ -46,7 +46,7 @@ class OnBoardingThree extends StatelessWidget {
       bottomNavigationBar: CustomBottomAppBar(
         title: 'Next',
         cb: () {
-          Get.toNamed(OnBoardingFour.routeName);
+          Get.toNamed(OnBoardingTwo.routeName);
         },
       ),
     );
