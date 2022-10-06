@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can/controllers/user_controller.dart';
-import 'package:i_can/screens/bottom_bar.dart';
 import 'package:i_can/screens/on_boarding_1.dart';
 import 'package:i_can/screens/on_boarding_2.dart';
 
