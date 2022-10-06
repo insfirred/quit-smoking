@@ -13,7 +13,11 @@ class UserController extends GetxController {
 
   void setDate(DateTime dateTime) {
     user.startingDate = dateTime;
-    print(user.startingDate);
+    update();
+  }
+
+  void setNumberOfCigPerPack(int val) {
+    user.numberOfCigPerPack = val;
     update();
   }
 
@@ -23,5 +27,9 @@ class UserController extends GetxController {
 
   DateTime getStartingDate() {
     return user.startingDate;
+  }
+
+  int getNumberofCigPerPack() {
+    return user.numberOfCigPerPack;
   }
 }

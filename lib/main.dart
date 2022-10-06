@@ -7,6 +7,7 @@ import 'package:i_can/screens/on_boarding_1.dart';
 import 'package:i_can/screens/on_boarding_2.dart';
 
 import 'package:get/get.dart';
+import 'package:i_can/screens/on_boarding_3.dart';
 
 import './screens/on_boarding_1.dart';
 import './controllers/user_controller.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: OnBoardingOne.routeName, page: () => OnBoardingOne()),
         GetPage(name: OnBoardingTwo.routeName, page: () => OnBoardingTwo()),
+        GetPage(name: OnBoardingThree.routeName, page: () => OnBoardingThree()),
       ],
       home: OnBoardingOne(),
     );

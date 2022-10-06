@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:i_can/screens/on_boarding_3.dart';
 
 import 'package:i_can/widgets/custom_bottom_app_bar.dart';
 import 'package:i_can/widgets/custom_on_boarding_card.dart';
@@ -53,7 +54,11 @@ class OnBoardingTwo extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomAppBar(title: 'Next', cb: () {}),
+      bottomNavigationBar: CustomBottomAppBar(
+          title: 'Next',
+          cb: () {
+            Get.toNamed(OnBoardingThree.routeName);
+          }),
     );
   }
 }

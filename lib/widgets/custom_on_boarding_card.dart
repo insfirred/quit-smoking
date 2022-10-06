@@ -32,11 +32,14 @@ class CustomOnBoardingCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 30,
-                color: Colors.white,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 30,
+                  color: Colors.white,
+                ),
               ),
             ),
             SizedBox(
