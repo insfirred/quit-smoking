@@ -26,6 +26,11 @@ class UserController extends GetxController {
     update();
   }
 
+  void setPricePack(double val) {
+    user.packPrice = val;
+    update();
+  }
+
   String getName() {
     return user.name;
   }
@@ -40,5 +45,9 @@ class UserController extends GetxController {
 
   int getNumberOfCigPerDay() {
     return user.numberOfCigPerDay;
+  }
+
+  double getPackPrice() {
+    return user.packPrice;
   }
 }
