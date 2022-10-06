@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:i_can/screens/bottom_bar.dart';
 
 import './screens/home_screen.dart';
 
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'I Can',
       theme: ThemeData(textTheme: GoogleFonts.acmeTextTheme()),
-      home: BottomBar(),
+      home: HomeScreen(),
     );
   }
 }
