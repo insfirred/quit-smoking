@@ -16,8 +16,8 @@ An application that helps you to quit smoking by showing your everyday performan
 
 ### Feel free to create your own issues :)
 
-<!-- ## Our Contributors
-<table>
+## Our Contributors
+<!-- <table>
 	<tr>
 		<td>
 			<a href="https://github.com/insfirred/quit-smoking/graphs/contributors">
@@ -26,6 +26,9 @@ An application that helps you to quit smoking by showing your everyday performan
 		</td>
 	</tr>
 </table> -->
+<!-- <a href = "https://github.com/insfirred/quit-smoking/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=insfirred/quit-smoking"/>
+</a> -->
 
 # Project Setup
 ### This project is built in Flutter v3.3.2
