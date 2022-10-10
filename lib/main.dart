@@ -2,25 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can/controllers/user_controller.dart';
+import 'package:i_can/screens/home_screen.dart';
 import 'package:i_can/screens/on_boarding_1.dart';
 import 'package:i_can/screens/on_boarding_2.dart';
 
-import 'package:get/get.dart';
 import 'package:i_can/screens/on_boarding_3.dart';
 import 'package:i_can/screens/on_boarding_4.dart';
 import 'package:i_can/screens/on_boarding_5.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import './screens/on_boarding_1.dart';
-import './controllers/user_controller.dart';
-
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  runApp(MyApp(prefs: prefs));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  final SharedPreferences? prefs;
+  const MyApp({super.key, this.prefs});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  bool isOnboarded = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getOnBoardingStatus();
+    });
+  }
+
+  void getOnBoardingStatus() async {
+    bool? status = widget.prefs!.getBool('isOnboarded');
+    if (status == null || !status) {
+      isOnboarded = false;
+    } else {
+      isOnboarded = true;
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.put(UserController());
@@ -38,9 +64,14 @@ class MyApp extends StatelessWidget {
         GetPage(name: OnBoardingTwo.routeName, page: () => OnBoardingTwo()),
         GetPage(name: OnBoardingThree.routeName, page: () => OnBoardingThree()),
         GetPage(name: OnBoardingFour.routeName, page: () => OnBoardingFour()),
-        GetPage(name: OnBoardingFive.routeName, page: () => OnBoardingFive()),
+        GetPage(
+          name: OnBoardingFive.routeName,
+          page: () => OnBoardingFive(
+            prefs: widget.prefs!,
+          ),
+        ),
       ],
-      home: OnBoardingOne(),
+      home: isOnboarded ? const HomeScreen() : OnBoardingOne(),
     );
   }
 }
