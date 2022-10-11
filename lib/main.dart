@@ -11,10 +11,10 @@ import 'package:i_can/screens/on_boarding_4.dart';
 import 'package:i_can/screens/on_boarding_5.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  runApp(MyApp(prefs: prefs));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(MyApp(prefs: prefs)),);
 }
 
 class MyApp extends StatefulWidget {
