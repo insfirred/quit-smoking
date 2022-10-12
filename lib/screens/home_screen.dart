@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:i_can/utils/string_ext.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -261,25 +263,37 @@ class ValueSaved extends StatelessWidget {
   }
 }
 
-class Greetings extends StatelessWidget {
-  const Greetings({
-    Key? key,
-  }) : super(key: key);
+class Greetings extends StatefulWidget {
+  const Greetings({Key? key}) : super(key: key);
+
+  @override
+  State<Greetings> createState() => _GreetingsState();
+}
+
+class _GreetingsState extends State<Greetings> {
+  DateTime now = DateTime.now();
+  late String _formattedDate;
+
+  @override
+  void initState() {
+    _formattedDate = DateFormat('kk').format(now);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         Text(
-          "Good Eveving, John",
-          style: TextStyle(
+          "${_formattedDate.toTimeConvention()}, John",
+          style: const TextStyle(
             color: Color(0xffebe9e9),
             fontSize: 35,
           ),
         ),
-        SizedBox(height: 9),
-        Text(
+        const SizedBox(height: 9),
+        const Text(
           "Glad to see your performance",
           style: TextStyle(
             color: Color(0xffd9d9d9),
