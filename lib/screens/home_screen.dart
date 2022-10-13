@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:i_can/utils/string_ext.dart';
 import 'package:intl/intl.dart';
+import 'dart:async' show Future, Timer;
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +13,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Timer _timer;
+  var _index = 0;
+  String _motivation = 'You are stronger than you think :)';
+
+  Future<String> loadJsonData() async {
+    var jsonText = await rootBundle.loadString('assets/motivations.json');
+      List data = json.decode(jsonText)['results'];
+      _timer = Timer.periodic(const Duration(seconds: 30), (_) {
+        setState(() {
+          _index++;
+          _index = _index >= data.length ? 0 : _index;
+          _motivation = data.elementAt(_index);
+        });
+      });
+    return 'Success';
+  }
+
+  @override
+  void initState() {
+    loadJsonData();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -98,11 +130,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
     
     
-                    Text(
-                      "You are stronger than you think :)",
-                      style: TextStyle(
-                        color: Color(0xffd9d9d9),
-                        fontSize: 30,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 7.5,
+                      child: Text(
+                      _motivation,
+                        style: const TextStyle(
+                          color: Color(0xffd9d9d9),
+                          fontSize: 25,
+                        ),
                       ),
                     ),
                   ]),
