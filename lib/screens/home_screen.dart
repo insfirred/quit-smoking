@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../models/modifer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFF1F2120),
@@ -268,11 +272,12 @@ class Greetings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       final name = Provider.of<NameChange>(context).nameofuser;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children:  [
         Text(
-          "Good Eveving, John",
+          name.text,
           style: TextStyle(
             color: Color(0xffebe9e9),
             fontSize: 35,

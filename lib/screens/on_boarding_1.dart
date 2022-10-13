@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:i_can/main.dart';
+import 'package:i_can/models/modifer.dart';
+import 'package:i_can/screens/home_screen.dart';
 
 import 'package:i_can/screens/on_boarding_2.dart';
 import 'package:i_can/widgets/custom_bottom_app_bar.dart';
 import 'package:i_can/widgets/custom_on_boarding_card.dart';
 import 'package:i_can/controllers/user_controller.dart';
 import 'package:i_can/widgets/custom_text_field.dart';
+import 'package:provider/provider.dart';
 
 //first onboarding screen
 class OnBoardingOne extends StatelessWidget {
@@ -23,6 +27,7 @@ class OnBoardingOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final name = Provider.of<NameChange>(context).nameofuser;
     final mediaQuery = MediaQuery.of(context);
     final theme = Theme.of(context);
     return Scaffold(
@@ -37,9 +42,10 @@ class OnBoardingOne extends StatelessWidget {
               color: theme.focusColor,
               borderRadius: BorderRadius.circular(25),
             ),
-            child: CustomTextField(
-              cb: onChanged,
-              label: 'Your name',
+            child: TextField(
+           decoration: InputDecoration(labelText: 'Your name'),
+              controller: name,
+             
             ),
           ),
         ),
@@ -48,6 +54,7 @@ class OnBoardingOne extends StatelessWidget {
         title: 'Next',
         cb: () {
           Get.toNamed(OnBoardingTwo.routeName);
+           Provider.of<NameChange>(context,listen: false).updateName(name.toString());
         },
       ),
     );

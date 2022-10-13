@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can/controllers/user_controller.dart';
+import 'package:i_can/models/modifer.dart';
 import 'package:i_can/screens/home_screen.dart';
 import 'package:i_can/screens/on_boarding_1.dart';
 import 'package:i_can/screens/on_boarding_2.dart';
@@ -10,12 +11,17 @@ import 'package:i_can/screens/on_boarding_2.dart';
 import 'package:i_can/screens/on_boarding_3.dart';
 import 'package:i_can/screens/on_boarding_4.dart';
 import 'package:i_can/screens/on_boarding_5.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(MyApp(prefs: prefs)),);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) =>  runApp(MultiProvider(providers: [ 
+     ChangeNotifierProvider( 
+       create: (context) => NameChange(), 
+     ), 
+   ], child:  MyApp(prefs: prefs))));
 }
 
 class MyApp extends StatefulWidget {
