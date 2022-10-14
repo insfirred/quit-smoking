@@ -16,7 +16,7 @@ An application that helps you to quit smoking by showing your everyday performan
 
 ### Feel free to create your own issues :)
 
-## Our Contributors
+## Thank You to All Our Contributors
 <a href = "https://github.com/insfirred/quit-smoking/graphs/contributors">
   <img src = "https://contrib.rocks/image?repo=insfirred/quit-smoking"/>
 </a>

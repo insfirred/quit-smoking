@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../models/modifer.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,6 +14,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Timer _timer;
+  var _index = 0;
+  String _motivation = 'You are stronger than you think :)';
+
+  Future<String> loadJsonData() async {
+    var jsonText = await rootBundle.loadString('assets/motivations.json');
+      List data = json.decode(jsonText)['results'];
+      _timer = Timer.periodic(const Duration(seconds: 30), (_) {
+        setState(() {
+          _index++;
+          _index = _index >= data.length ? 0 : _index;
+          _motivation = data.elementAt(_index);
+        });
+      });
+    return 'Success';
+  }
+
+  @override
+  void initState() {
+    loadJsonData();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     
@@ -100,11 +132,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
     
     
-                    Text(
-                      "You are stronger than you think :)",
-                      style: TextStyle(
-                        color: Color(0xffd9d9d9),
-                        fontSize: 30,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 7.5,
+                      child: Text(
+                      _motivation,
+                        style: const TextStyle(
+                          color: Color(0xffd9d9d9),
+                          fontSize: 25,
+                        ),
                       ),
                     ),
                   ]),
@@ -265,26 +300,40 @@ class ValueSaved extends StatelessWidget {
   }
 }
 
-class Greetings extends StatelessWidget {
-  const Greetings({
-    Key? key,
-  }) : super(key: key);
+class Greetings extends StatefulWidget {
+  const Greetings({Key? key}) : super(key: key);
+
+  @override
+  State<Greetings> createState() => _GreetingsState();
+}
+
+class _GreetingsState extends State<Greetings> {
+  DateTime now = DateTime.now();
+  late String _formattedDate;
+
+  @override
+  void initState() {
+    _formattedDate = DateFormat('kk').format(now);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
        final name = Provider.of<NameChange>(context).nameofuser;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+
       children:  [
         Text(
           name.text,
           style: TextStyle(
+
             color: Color(0xffebe9e9),
             fontSize: 35,
           ),
         ),
-        SizedBox(height: 9),
-        Text(
+        const SizedBox(height: 9),
+        const Text(
           "Glad to see your performance",
           style: TextStyle(
             color: Color(0xffd9d9d9),
