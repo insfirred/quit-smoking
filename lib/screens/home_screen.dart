@@ -5,6 +5,8 @@ import 'dart:async' show Future, Timer;
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -17,33 +19,64 @@ class _HomeScreenState extends State<HomeScreen> {
   var _index = 0;
   String _motivation = 'You are stronger than you think :)';
 
+  final _dateNow = DateTime.now();
+  late DateTime _durationLastOpen;
+  Duration _durationNoSmoking = const Duration();
+  late Timer _timerNoSmoking;
+  int _lastSeconds = 0;
+
+  void _timerStopWatch() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('first_open') == null) {
+      _lastSeconds = _durationNoSmoking.inSeconds;
+      prefs.setString('first_open', _dateNow.toString());
+      print('test 1 ${_lastSeconds++}');
+    } else {
+      _durationLastOpen = DateTime.parse((prefs.getString('first_open') ?? ''));
+      _lastSeconds = _dateNow.difference(_durationLastOpen).inSeconds;
+      print('test 2 ${_lastSeconds++}');
+    }
+  }
+
   Future<String> loadJsonData() async {
     var jsonText = await rootBundle.loadString('assets/motivations.json');
-      List data = json.decode(jsonText)['results'];
-      _timer = Timer.periodic(const Duration(seconds: 30), (_) {
-        setState(() {
-          _index++;
-          _index = _index >= data.length ? 0 : _index;
-          _motivation = data.elementAt(_index);
-        });
+    List data = json.decode(jsonText)['results'];
+    _timer = Timer.periodic(const Duration(seconds: 30), (_) {
+      setState(() {
+        _index++;
+        _index = _index >= data.length ? 0 : _index;
+        _motivation = data.elementAt(_index);
       });
+    });
     return 'Success';
   }
 
   @override
   void initState() {
     loadJsonData();
+    _timerStopWatch();
+    _timerNoSmoking = Timer.periodic(const Duration(seconds: 1), (_) {
+      final seconds = _lastSeconds++;
+      setState(() {
+        _durationNoSmoking = Duration(seconds: seconds);
+      });
+    });
     super.initState();
   }
 
   @override
   void dispose() {
     _timer.cancel();
+    _timerNoSmoking.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    String _twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = _twoDigits(_durationNoSmoking.inHours);
+    final minutes = _twoDigits(_durationNoSmoking.inMinutes.remainder(60));
+    final seconds = _twoDigits(_durationNoSmoking.inSeconds.remainder(60));
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFF1F2120),
@@ -53,94 +86,89 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Greetings(),
-
               SizedBox(height: 25),
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    
-                    ValueSaved(),
-    
-    
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TimerCircle(timeUnit: "hours", value: 16),
-                            TimerCircle(timeUnit: "minutes", value: 35),
-                            TimerCircle(timeUnit: "seconds", value: 48,)
-                          ],
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Text(
-                            "of no smoking",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xffd9d9d9),
-                              fontSize: 25,
-                            ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ValueSaved(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TimerCircle(timeUnit: "hours", value: hours),
+                              TimerCircle(timeUnit: "minutes", value: minutes),
+                              TimerCircle(
+                                timeUnit: "seconds",
+                                value: seconds,
+                              )
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-    
-    
-                    Container(
-                      width: 220,
-                      height: 110,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x26000000),
-                            blurRadius: 8,
-                            offset: Offset(2, 4),
-                          ),
-                        ],
-                        color: Color(0xff313433),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Cigarettes Avoided",
+                          const Padding(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Text(
+                              "of no smoking",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xffd9d9d9),
-                                fontSize: 20,
+                                fontSize: 25,
                               ),
                             ),
-                            Text(
-                              "6",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                              ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: 220,
+                        height: 110,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x26000000),
+                              blurRadius: 8,
+                              offset: Offset(2, 4),
                             ),
                           ],
+                          color: Color(0xff313433),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Cigarettes Avoided",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xffd9d9d9),
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Text(
+                                "6",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-    
-    
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 7.5,
-                      child: Text(
-                      _motivation,
-                        style: const TextStyle(
-                          color: Color(0xffd9d9d9),
-                          fontSize: 25,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 7.5,
+                        child: Text(
+                          _motivation,
+                          style: const TextStyle(
+                            color: Color(0xffd9d9d9),
+                            fontSize: 25,
+                          ),
                         ),
                       ),
-                    ),
-                  ]),
+                    ]),
               ),
               SizedBox(height: 25),
               NavBar(),
@@ -152,13 +180,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-
-
-
-
 class TimerCircle extends StatelessWidget {
   var value;
   String timeUnit;
+
   TimerCircle({
     Key? key,
     required this.value,
@@ -218,10 +243,6 @@ class TimerCircle extends StatelessWidget {
     );
   }
 }
-
-
-
-
 
 class ValueSaved extends StatelessWidget {
   const ValueSaved({
@@ -347,17 +368,20 @@ class NavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xff313433),
-        borderRadius: BorderRadius.circular(40)
-      ),
+          color: Color(0xff313433), borderRadius: BorderRadius.circular(40)),
       height: 60,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Icon(Icons.share, color: Color(0xffd9d9d9),size: 35,),
-          Icon(Icons.settings, color: Color(0xffd9d9d9),size: 35,)
-        ]
-      ),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        Icon(
+          Icons.share,
+          color: Color(0xffd9d9d9),
+          size: 35,
+        ),
+        Icon(
+          Icons.settings,
+          color: Color(0xffd9d9d9),
+          size: 35,
+        )
+      ]),
     );
   }
 }
