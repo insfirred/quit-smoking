@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
+import 'package:i_can/controllers/user_controller.dart';
+import 'package:i_can/l10n/localization.dart';
 import 'package:i_can/screens/on_boarding_4.dart';
 import 'package:i_can/widgets/custom_bottom_app_bar.dart';
 import 'package:i_can/widgets/custom_on_boarding_card.dart';
-import 'package:i_can/controllers/user_controller.dart';
 import 'package:i_can/widgets/custom_text_field.dart';
 
 //first onboarding screen
@@ -27,7 +26,7 @@ class OnBoardingThree extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: CustomOnBoardingCard(
-          title: 'How many cigarettes are there in one pack?',
+          title: Localization.of(context)!.how_many_cigarettes_pack,
           bottomWidget: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             width: double.infinity,
@@ -44,7 +43,7 @@ class OnBoardingThree extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: CustomBottomAppBar(
-        title: 'Next',
+        title: Localization.of(context)!.next,
         cb: () {
           Get.toNamed(OnBoardingFour.routeName);
         },

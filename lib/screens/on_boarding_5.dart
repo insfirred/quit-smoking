@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
+import 'package:i_can/controllers/user_controller.dart';
+import 'package:i_can/l10n/localization.dart';
 import 'package:i_can/screens/home_screen.dart';
-
 import 'package:i_can/widgets/custom_bottom_app_bar.dart';
 import 'package:i_can/widgets/custom_on_boarding_card.dart';
-import 'package:i_can/controllers/user_controller.dart';
 import 'package:i_can/widgets/custom_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //first onboarding screen
 class OnBoardingFive extends StatefulWidget {
   final SharedPreferences prefs;
+
   const OnBoardingFive({Key? key, required this.prefs}) : super(key: key);
   static const routeName = '/fifth-on-boarding';
 
@@ -34,7 +34,7 @@ class _OnBoardingFiveState extends State<OnBoardingFive> {
     return Scaffold(
       body: Center(
         child: CustomOnBoardingCard(
-          title: 'How much a pack of cigarette costs (in rupee)?',
+          title: Localization.of(context)!.how_much_costs,
           bottomWidget: Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             width: double.infinity,
@@ -51,7 +51,7 @@ class _OnBoardingFiveState extends State<OnBoardingFive> {
         ),
       ),
       bottomNavigationBar: CustomBottomAppBar(
-        title: 'I Can and I Will',
+        title: Localization.of(context)!.i_can_and_will,
         cb: () {
           widget.prefs.setBool('isOnboarded', true);
           Navigator.pushAndRemoveUntil(

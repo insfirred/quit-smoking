@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:i_can/l10n/localization.dart';
 import 'package:i_can/utils/string_ext.dart';
 import 'package:intl/intl.dart';
 import 'dart:async' show Future, Timer;
@@ -69,17 +70,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TimerCircle(timeUnit: "hours", value: 16),
-                            TimerCircle(timeUnit: "minutes", value: 35),
-                            TimerCircle(timeUnit: "seconds", value: 48,)
+                            TimerCircle(timeUnit: Localization.of(context)!.hours, value: 16),
+                            TimerCircle(timeUnit: Localization.of(context)!.minutes, value: 35),
+                            TimerCircle(timeUnit: Localization.of(context)!.seconds, value: 48,)
                           ],
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
                           child: Text(
-                            "of no smoking",
+                            Localization.of(context)!.no_smoking,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xffd9d9d9),
                               fontSize: 25,
                             ),
@@ -109,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Cigarettes Avoided",
+                              Localization.of(context)!.cigarettes_avoided,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xffd9d9d9),
@@ -128,12 +129,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-    
-    
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 7.5,
                       child: Text(
-                      _motivation,
+                      Localization.of(context)!.you_are_strong,,
                         style: const TextStyle(
                           color: Color(0xffd9d9d9),
                           fontSize: 25,
@@ -244,7 +243,7 @@ class ValueSaved extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Money Saved",
+                Localization.of(context)!.money_saved,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xffd9d9d9),
@@ -274,7 +273,7 @@ class ValueSaved extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Life Saved",
+                Localization.of(context)!.life_saved,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xffd9d9d9),
@@ -327,9 +326,12 @@ class _GreetingsState extends State<Greetings> {
             fontSize: 35,
           ),
         ),
+        SizedBox(height: 9),
+        Text(
+          Localization.of(context)!.glad_to_see,
         const SizedBox(height: 9),
         const Text(
-          "Glad to see your performance",
+         Localization.of(context)!.glad_to_see,
           style: TextStyle(
             color: Color(0xffd9d9d9),
             fontSize: 18,

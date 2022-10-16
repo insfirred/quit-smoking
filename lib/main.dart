@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:i_can/controllers/user_controller.dart';
+import 'package:i_can/l10n/localization.dart';
 import 'package:i_can/screens/home_screen.dart';
 import 'package:i_can/screens/on_boarding_1.dart';
 import 'package:i_can/screens/on_boarding_2.dart';
-
 import 'package:i_can/screens/on_boarding_3.dart';
 import 'package:i_can/screens/on_boarding_4.dart';
 import 'package:i_can/screens/on_boarding_5.dart';
@@ -15,11 +16,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(MyApp(prefs: prefs)),);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (value) => runApp(MyApp(prefs: prefs)),
+  );
 }
 
 class MyApp extends StatefulWidget {
   final SharedPreferences? prefs;
+
   const MyApp({super.key, this.prefs});
 
   @override
@@ -29,6 +33,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   bool isOnboarded = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -71,6 +76,16 @@ class _MyAppState extends State<MyApp> {
             prefs: widget.prefs!,
           ),
         ),
+      ],
+      localizationsDelegates: const [
+        QuitSmokeLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('de'),
       ],
       home: isOnboarded ? const HomeScreen() : OnBoardingOne(),
     );
