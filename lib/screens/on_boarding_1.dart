@@ -7,6 +7,7 @@ import 'package:i_can/widgets/custom_bottom_app_bar.dart';
 import 'package:i_can/widgets/custom_on_boarding_card.dart';
 import 'package:i_can/controllers/user_controller.dart';
 import 'package:i_can/widgets/custom_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //first onboarding screen
 class OnBoardingOne extends StatelessWidget {
@@ -17,7 +18,9 @@ class OnBoardingOne extends StatelessWidget {
 
   //callback function that will be called whenever value in the text field is changed
   //for ex - it will be called whenever the user inputs his/her name
-  void onChanged(String? val) {
+  void onChanged(String? val) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('name', val ?? '');
     userController.setName(val as String);
   }
 
