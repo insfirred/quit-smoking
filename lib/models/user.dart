@@ -1,4 +1,6 @@
 //data of the user
+import 'package:shared_preferences/shared_preferences.dart';
+
 class User {
   String name = '';
   DateTime startingDate = DateTime.now();
@@ -6,5 +8,8 @@ class User {
   int numberOfCigPerDay = 0;
   double packPrice = 0.0;
 
-  User();
+  User(){
+  }
+
+
 }
