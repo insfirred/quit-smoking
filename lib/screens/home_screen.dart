@@ -1,8 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:i_can/utils/string_ext.dart';
 import 'package:intl/intl.dart';
 import 'dart:async' show Future, Timer;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,12 +76,15 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  final controller = ScreenshotController();
+
   @override
   Widget build(BuildContext context) {
     String _twoDigits(int n) => n.toString().padLeft(2, '0');
     final hours = _twoDigits(_durationNoSmoking.inHours);
     final minutes = _twoDigits(_durationNoSmoking.inMinutes.remainder(60));
     final seconds = _twoDigits(_durationNoSmoking.inSeconds.remainder(60));
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFF1F2120),
@@ -88,90 +96,96 @@ class _HomeScreenState extends State<HomeScreen> {
               Greetings(),
               SizedBox(height: 25),
               Expanded(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ValueSaved(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TimerCircle(timeUnit: "hours", value: hours),
-                              TimerCircle(timeUnit: "minutes", value: minutes),
-                              TimerCircle(
-                                timeUnit: "seconds",
-                                value: seconds,
-                              )
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 20),
-                            child: Text(
-                              "of no smoking",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xffd9d9d9),
-                                fontSize: 25,
-                              ),
+                child: Screenshot(
+                  controller: controller,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ValueSaved(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TimerCircle(timeUnit: "hours", value: hours),
+                                TimerCircle(
+                                    timeUnit: "minutes", value: minutes),
+                                TimerCircle(
+                                  timeUnit: "seconds",
+                                  value: seconds,
+                                )
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        width: 220,
-                        height: 110,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0x26000000),
-                              blurRadius: 8,
-                              offset: Offset(2, 4),
-                            ),
-                          ],
-                          color: Color(0xff313433),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Cigarettes Avoided",
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20),
+                              child: Text(
+                                "of no smoking",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Color(0xffd9d9d9),
-                                  fontSize: 20,
+                                  fontSize: 25,
                                 ),
                               ),
-                              Text(
-                                "6",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: 220,
+                          height: 110,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x26000000),
+                                blurRadius: 8,
+                                offset: Offset(2, 4),
                               ),
                             ],
+                            color: Color(0xff313433),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text(
+                                  "Cigarettes Avoided",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Color(0xffd9d9d9),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  "6",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 7.5,
-                        child: Text(
-                          _motivation,
-                          style: const TextStyle(
-                            color: Color(0xffd9d9d9),
-                            fontSize: 25,
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 7.5,
+                          child: Text(
+                            _motivation,
+                            style: const TextStyle(
+                              color: Color(0xffd9d9d9),
+                              fontSize: 25,
+                            ),
                           ),
                         ),
-                      ),
-                    ]),
+                      ]),
+                ),
               ),
-              SizedBox(height: 25),
-              NavBar(),
+              const SizedBox(height: 25),
+              NavBar(
+                controller: controller,
+              ),
             ],
           ),
         ),
@@ -362,7 +376,8 @@ class _GreetingsState extends State<Greetings> {
 }
 
 class NavBar extends StatelessWidget {
-  const NavBar({super.key});
+  ScreenshotController controller;
+  NavBar({required this.controller, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -371,16 +386,32 @@ class NavBar extends StatelessWidget {
           color: Color(0xff313433), borderRadius: BorderRadius.circular(40)),
       height: 60,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        Icon(
-          Icons.share,
-          color: Color(0xffd9d9d9),
-          size: 35,
+        IconButton(
+          onPressed: () async {
+            final image = await controller.capture();
+
+            final name = 'ICAN_${DateTime.now()}';
+            if (image == null) return;
+            await [Permission.storage].request();
+            final directory = await getApplicationDocumentsDirectory();
+            final file = File('${directory.path}/$name.jpg');
+            file.writeAsBytesSync(image);
+            await Share.shareFiles([file.path], text: 'I CAN');
+          },
+          icon: const Icon(
+            Icons.share,
+            color: Color(0xffd9d9d9),
+            size: 35,
+          ),
         ),
-        Icon(
-          Icons.settings,
-          color: Color(0xffd9d9d9),
-          size: 35,
-        )
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.settings,
+            color: Color(0xffd9d9d9),
+            size: 35,
+          ),
+        ),
       ]),
     );
   }
