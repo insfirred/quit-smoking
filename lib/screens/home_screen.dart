@@ -343,9 +343,16 @@ class Greetings extends StatefulWidget {
 class _GreetingsState extends State<Greetings> {
   DateTime now = DateTime.now();
   late String _formattedDate;
+  String _name = '';
+
+  void getName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _name = prefs.getString('name') ?? '';
+  }
 
   @override
   void initState() {
+    getName();
     _formattedDate = DateFormat('kk').format(now);
     super.initState();
   }
@@ -356,7 +363,7 @@ class _GreetingsState extends State<Greetings> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "${_formattedDate.toTimeConvention()}, John",
+          "${_formattedDate.toTimeConvention()}, $_name",
           style: const TextStyle(
             color: Color(0xffebe9e9),
             fontSize: 35,
