@@ -1,5 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:i_can/controllers/user_controller.dart';
+import 'package:i_can/models/user.dart';
 import 'package:i_can/utils/string_ext.dart';
 import 'package:intl/intl.dart';
 import 'dart:async' show Future, Timer;
@@ -23,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Timer _timer;
   var _index = 0;
   String _motivation = 'You are stronger than you think :)';
+
 
   final _dateNow = DateTime.now();
   late DateTime _durationLastOpen;
@@ -55,10 +59,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     return 'Success';
   }
+  late UserController user;
 
   @override
   void initState() {
     loadJsonData();
+    user=Get.find<UserController>();
+
     _timerStopWatch();
     _timerNoSmoking = Timer.periodic(const Duration(seconds: 1), (_) {
       final seconds = _lastSeconds++;
@@ -87,106 +94,109 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: NavBar(
+          controller: controller,
+        ),
         backgroundColor: Color(0xFF1F2120),
-        body: Padding(
+        body: Container(
           padding: EdgeInsets.fromLTRB(30, 15, 30, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Greetings(),
-              SizedBox(height: 25),
-              Expanded(
-                child: Screenshot(
-                  controller: controller,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ValueSaved(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                TimerCircle(timeUnit: "hours", value: hours),
-                                TimerCircle(
-                                    timeUnit: "minutes", value: minutes),
-                                TimerCircle(
-                                  timeUnit: "seconds",
-                                  value: seconds,
-                                )
-                              ],
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 20),
-                              child: Text(
-                                "of no smoking",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xffd9d9d9),
-                                  fontSize: 25,
-                                ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Greetings(),
+                SizedBox(height: 25),
+                SingleChildScrollView(
+                  child: Screenshot(
+                    controller: controller,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ValueSaved(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  TimerCircle(timeUnit: "hours", value: hours),
+                                  TimerCircle(
+                                      timeUnit: "minutes", value: minutes),
+                                  TimerCircle(
+                                    timeUnit: "seconds",
+                                    value: seconds,
+                                  )
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 220,
-                          height: 110,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0x26000000),
-                                blurRadius: 8,
-                                offset: Offset(2, 4),
-                              ),
-                            ],
-                            color: Color(0xff313433),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
-                                Text(
-                                  "Cigarettes Avoided",
+                              const Padding(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Text(
+                                  "of no smoking",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Color(0xffd9d9d9),
-                                    fontSize: 20,
+                                    fontSize: 25,
                                   ),
                                 ),
-                                Text(
-                                  "6",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30,
-                                  ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: 220,
+                            height: 110,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color(0x26000000),
+                                  blurRadius: 8,
+                                  offset: Offset(2, 4),
                                 ),
                               ],
+                              color: Color(0xff313433),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children:  [
+                                  Text(
+                                    "Cigarettes Avoided",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xffd9d9d9),
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${(_durationNoSmoking.inSeconds*user.getNumberOfCigPerDay()/3600/24).toStringAsFixed(2)}",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 7.5,
-                          child: Text(
-                            _motivation,
-                            style: const TextStyle(
-                              color: Color(0xffd9d9d9),
-                              fontSize: 25,
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 7.5,
+                            child: Text(
+                              _motivation,
+                              style: const TextStyle(
+                                color: Color(0xffd9d9d9),
+                                fontSize: 25,
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
+                        ]),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 25),
-              NavBar(
-                controller: controller,
-              ),
-            ],
+                const SizedBox(height: 25),
+
+              ],
+            ),
           ),
         ),
       ),
