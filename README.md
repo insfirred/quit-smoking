@@ -1,4 +1,10 @@
+<H1><center><B>This Project is build and maintained in HACKTOBERFEST 2022</B> </center> </H1>
 
+  <img src ='https://github.com/Srishti44-g/HACTOBERFEST-2022/blob/main/Hactoberfest2022.png'>
+ <H2>REGISTRATION</h2>
+  Register anytime between September 26 and October 31
+  <h3>Registration Link :https://hacktoberfest.com/ </h3>
+  
 # I Can And I Will
 
 An application that helps you to quit smoking by showing your everyday performance and boosting your confidence.
