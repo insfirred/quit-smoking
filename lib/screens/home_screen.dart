@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          ValueSaved(),
+                          ValueSaved(timeNow: _durationNoSmoking,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -269,9 +269,8 @@ class TimerCircle extends StatelessWidget {
 }
 
 class ValueSaved extends StatelessWidget {
-  const ValueSaved({
-    Key? key,
-  }) : super(key: key);
+  Duration timeNow;
+  ValueSaved({required this.timeNow});
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +288,7 @@ class ValueSaved extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Money Saved",
+                "Money Saved per minute",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xffd9d9d9),
@@ -298,11 +297,11 @@ class ValueSaved extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                "₹15",
+                "₹ ${(Get.find<UserController>().getPackPrice()/Get.find<UserController>().getNumberofCigPerPack()*Get.find<UserController>().getNumberOfCigPerDay()*timeNow.inSeconds/24/60).toStringAsFixed(2)}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xffd9d9d9),
-                  fontSize: 40,
+                  fontSize: 35,
                 ),
               ),
             ],
