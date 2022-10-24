@@ -29,11 +29,11 @@ An application that helps you to quit smoking by showing your everyday performan
 ### This project is built in Flutter v3.3.2
 ##### Fork the repository and Clone it
 ```bash
-git clone https://github.com/insfirred/inshorts-clone.git
+git clone https://github.com/insfirred/quit-smoking.git
 ```
   ##### Move to the desired folder
 ```bash
-cd inshorts_clone
+cd quit-smoking
 ```
 
   ##### To run the app, simply write
