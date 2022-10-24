@@ -1,9 +1,9 @@
-<H1><center><B>This Project is build and maintained in HACKTOBERFEST 2022</B> </center> </H1>
-
-  <img src ='https://github.com/Srishti44-g/HACTOBERFEST-2022/blob/main/Hactoberfest2022.png'>
- <H2>REGISTRATION</h2>
-  Register anytime between September 26 and October 31
-  <h3>Registration Link :https://hacktoberfest.com/ </h3>
+<img src ='https://github.com/Srishti44-g/HACTOBERFEST-2022/blob/main/Hactoberfest2022.png'>
+  
+  <H1><center><B>This Project is developed in HACKTOBERFEST 2022 By</B> </center> </H1>
+  <a href = "https://github.com/insfirred/quit-smoking/graphs/contributors">
+  <img src = "https://contrib.rocks/image?repo=insfirred/quit-smoking"/>
+</a>
   
 # I Can And I Will
 
@@ -23,9 +23,7 @@ An application that helps you to quit smoking by showing your everyday performan
 ### Feel free to create your own issues :)
 
 ## Thank You to All Our Contributors
-<a href = "https://github.com/insfirred/quit-smoking/graphs/contributors">
-  <img src = "https://contrib.rocks/image?repo=insfirred/quit-smoking"/>
-</a>
+
 
 # Project Setup
 ### This project is built in Flutter v3.3.2
