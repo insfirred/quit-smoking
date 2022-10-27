@@ -288,7 +288,7 @@ class ValueSaved extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Money Saved per minute",
+                "Money Saved",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xffd9d9d9),
@@ -297,7 +297,7 @@ class ValueSaved extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                "₹ ${(Get.find<UserController>().getPackPrice()/Get.find<UserController>().getNumberofCigPerPack()*Get.find<UserController>().getNumberOfCigPerDay()*timeNow.inSeconds/24/60).toStringAsFixed(2)}",
+                "₹ ${(Get.find<UserController>().getPackPrice()/Get.find<UserController>().getNumberofCigPerPack()*Get.find<UserController>().getNumberOfCigPerDay()*timeNow.inSeconds/24/60/60).toStringAsFixed(2)}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xffd9d9d9),
